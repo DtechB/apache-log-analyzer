@@ -63,7 +63,7 @@ function menu {
 	printf "********************************************************************************\n"
 	printf "*  5- range of OK status requests       |  6- range of ERROR status requests    \n"
 	printf "********************************************************************************\n"
-	printf "*  7- All IPs                           |  8- test                              \n"
+	printf "*  7- count all response code           |  8- test                              \n"
 	printf "********************************************************************************\n"
 	printf "*  9- All IPs                           | 10- test                              \n"
 	printf "********************************************************************************\n"
@@ -80,7 +80,7 @@ function menu {
 		4) request_per_day ;;
 		5) success_status ;;
 		6) error_status ;;
-		7) test ;;
+		7) count_response_code ;;
 		8) test ;;
 		9) test ;;
 		10) test ;;
@@ -166,6 +166,16 @@ function error_status {
     figlet Result
     printf "You can see this file in this directory that show all requests status error.\n\n"
     printf "1- errorStatus.txt\n\n"
+    printf "********************************************************************************\n"
+    again
+}
+
+# this function count number of all response code that are succesfuly or not
+function count_response_code {
+    awk '{print $9}' $file | sort | uniq -c | sort -rn > countResponseCode.txt
+    figlet Result
+    printf "You can see this file in this directory that show count of responsees code.\n\n"
+    printf "1- countResponseCode.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
