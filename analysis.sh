@@ -56,7 +56,7 @@ function menu {
 	case $option in
 		1) findIps ;;
 		2) number_of_visit_per_ips ;;
-		3) test ;;
+		3) top_ips_reffers ;;
 		4) test ;;
 		5) test ;;
 		6) test ;;
@@ -98,12 +98,23 @@ function findIps {
     again
 }
 
-# this function find all ips in log file that is (first) parameter and count them
+# this function find number of visit per each ip
 function number_of_visit_per_ips {
     awk '{print "requests from " $1}' $file | sort | uniq -c | sort > visitPerIPs.txt
     figlet Result
     printf "You can see this file in this directory that show number of visit per IPs.\n\n"
     printf "1- visitPerIPs.txt\n\n"
+    printf "***************************************************************************\n"
+    again
+}
+
+# this function find all top 10 of Ips and top 10 of reffers in log file
+function top_ips_reffers {
+    awk -F\" ' { print $4 } ' $file | grep -v '-' | grep -v 'http://www.semecomplete.com' | sort | uniq -c | sort -rn | head -n 10 > topIps.txt
+	awk -F\" ' { print $6 } ' $file | sort | uniq -c | sort -rn | head -n 10 > topReffers.txt
+    figlet Result
+    printf "You can see two files in this directory that show top 10 of IPs and Reffers.\n\n"
+    printf "1- topIps.txt      2- topReffers.txt\n\n"
     printf "***************************************************************************\n"
     again
 }
