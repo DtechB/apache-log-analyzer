@@ -16,7 +16,6 @@ function input {
 	printf "please choose file that you want be Analyze:\n"
 	printf "1- apache.log\n"
 	printf "2- access.log\n"
-	printf "3- error.log\n"
 	printf "*- exit\n"
 	read num
 
@@ -29,38 +28,34 @@ function input {
 		clear
 		iglet Analyze access.log
 		menu;;
-		3) file="error.log"
-		clear
-		figlet Analyze error.log
-		menu;;
 		*) exit;;
 	esac
 }
 
 function menu {
 
-	printf "\n***************************************************\n"
-	printf "*              choose option below                *\n"
-	printf "***************************************************\n"
-	printf "*  1- All IPs           |  2- test                *\n"
-	printf "***************************************************\n"
-	printf "*  3- All IPs           |  4- test                *\n"
-	printf "***************************************************\n"
-	printf "*  5- All IPs           |  6- test                *\n"
-	printf "***************************************************\n"
-	printf "*  7- All IPs           |  8- test                *\n"
-	printf "***************************************************\n"
-	printf "*  9- All IPs           | 10- test                *\n"
-	printf "***************************************************\n"
-	printf "* 11- All IPs           | 12- test                *\n"
-	printf "***************************************************\n"
+	printf "\n**********************************************************\n"
+	printf "*                   choose option below                    *\n"
+	printf "************************************************************\n"
+	printf "*  1- all IPs                |  2- number of visit per IPs *\n"
+	printf "************************************************************\n"
+	printf "*  3- top 10 IPs & referrs   |  4- request per day         *\n"
+	printf "************************************************************\n"
+	printf "*  5- All IPs                |  6- test                    *\n"
+	printf "************************************************************\n"
+	printf "*  7- All IPs                |  8- test                    *\n"
+	printf "************************************************************\n"
+	printf "*  9- All IPs                | 10- test                    *\n"
+	printf "************************************************************\n"
+	printf "* 11- All IPs                | 12- test                    *\n"
+	printf "************************************************************\n"
 
 	read option
 	clear
 
 	case $option in
 		1) findIps ;;
-		2) test ;;
+		2) number_of_visit_per_ips ;;
 		3) test ;;
 		4) test ;;
 		5) test ;;
@@ -97,9 +92,19 @@ function findIps {
     awk '{print count "times ("$1") repeated from list"}' $file | sort -r | uniq -c | sort -r >> IPs.txt
     awk '{print NR,$1}' $file | uniq > listIPs.txt
     figlet Result
-    printf "You can see two file in this directory that show result about IPs.\n"
-    printf "1- Ips.txt      2- listIPs.txt\n"
-    printf "*************************************************\n"
+    printf "You can see two file in this directory that show result about IPs.\n\n"
+    printf "1- Ips.txt      2- listIPs.txt\n\n"
+    printf "********************************************************************\n"
+    again
+}
+
+# this function find all ips in log file that is (first) parameter and count them
+function number_of_visit_per_ips {
+    awk '{print "requests from " $1}' $file | sort | uniq -c | sort > visitPerIPs.txt
+    figlet Result
+    printf "You can see this file in this directory that show number of visit per IPs.\n\n"
+    printf "1- visitPerIPs.txt\n\n"
+    printf "***************************************************************************\n"
     again
 }
 
