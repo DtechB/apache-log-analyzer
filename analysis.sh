@@ -61,13 +61,9 @@ function menu {
 	printf "********************************************************************************\n"
 	printf "*  3- top 10 IPs & referrs              |  4- request per day realtime         *\n"
 	printf "********************************************************************************\n"
-	printf "*  5- range of OK status requests       |  6- range of ERROR status requests    \n"
+	printf "*  5- range of OK status requests       |  6- range of ERROR status requests   *\n"
 	printf "********************************************************************************\n"
-	printf "*  7- count all response code           |  8- test                              \n"
-	printf "********************************************************************************\n"
-	printf "*  9- All IPs                           | 10- test                              \n"
-	printf "********************************************************************************\n"
-	printf "* 11- All IPs                           | 12- test                              \n"
+	printf "*  7- count all response code           |  8- images cause 200 & 403 response  *\n"
 	printf "********************************************************************************\n"
 
 	read option
@@ -81,11 +77,7 @@ function menu {
 		5) success_status ;;
 		6) error_status ;;
 		7) count_response_code ;;
-		8) test ;;
-		9) test ;;
-		10) test ;;
-		11) test ;;
-		12) test ;;
+		8) img_response ;;
 	esac
 
 }
@@ -176,6 +168,17 @@ function count_response_code {
     figlet Result
     printf "You can see this file in this directory that show count of responsees code.\n\n"
     printf "1- countResponseCode.txt\n\n"
+    printf "********************************************************************************\n"
+    again
+}
+
+# this function show list image requests that returned 404 or 200 response code
+function img_response {
+    awk '($9 ~ /200/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > imgsCouse200.txt
+    awk '($9 ~ /404/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > imgsCouse404.txt
+    figlet Result
+    printf "You can see two files in this directory that show images cause 200 and 404.\n\n"
+    printf "1- imgsCouse200.txt      2- imgsCouse404.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
