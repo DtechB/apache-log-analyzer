@@ -41,7 +41,7 @@ function menu {
 	printf "********************************************************************************\n"
 	printf "*  3- top 10 IPs & referrs              |  4- request per day realtime         *\n"
 	printf "********************************************************************************\n"
-	printf "*  5- All IPs                           |  6- test                              \n"
+	printf "*  5- range of OK status requests       |  6- range of ERROR status requests    \n"
 	printf "********************************************************************************\n"
 	printf "*  7- All IPs                           |  8- test                              \n"
 	printf "********************************************************************************\n"
@@ -58,8 +58,8 @@ function menu {
 		2) number_of_visit_per_ips ;;
 		3) top_ips_reffers ;;
 		4) request_per_day ;;
-		5) test ;;
-		6) test ;;
+		5) success_status ;;
+		6) error_status ;;
 		7) test ;;
 		8) test ;;
 		9) test ;;
@@ -126,6 +126,26 @@ function request_per_day {
     figlet Result
     printf "You can see two files in this directory that show requests realtime and per day.\n\n"
     printf "1- requestPerDay.txt      2- realtimeRequest.txt\n\n"
+    printf "********************************************************************************\n"
+    again
+}
+
+# this function show all item that status requests are between 200 and 304 that show succsess
+function success_status {
+    awk '($9 ~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > succesStatus.txt
+    figlet Result
+    printf "You can see this file in this directory that show all requests status success.\n\n"
+    printf "1- succesStatus.txt\n\n"
+    printf "********************************************************************************\n"
+    again
+}
+
+# this function show all item that status requests are between 400 and 504 that show error
+function error_status {
+    awk '($9 !~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > errorStatus.txt
+    figlet Result
+    printf "You can see this file in this directory that show all requests status error.\n\n"
+    printf "1- errorStatus.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
