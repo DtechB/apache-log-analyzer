@@ -34,21 +34,21 @@ function input {
 
 function menu {
 
-	printf "\n**********************************************************\n"
-	printf "*                   choose option below                    *\n"
-	printf "************************************************************\n"
-	printf "*  1- all IPs                |  2- number of visit per IPs *\n"
-	printf "************************************************************\n"
-	printf "*  3- top 10 IPs & referrs   |  4- request per day         *\n"
-	printf "************************************************************\n"
-	printf "*  5- All IPs                |  6- test                    *\n"
-	printf "************************************************************\n"
-	printf "*  7- All IPs                |  8- test                    *\n"
-	printf "************************************************************\n"
-	printf "*  9- All IPs                | 10- test                    *\n"
-	printf "************************************************************\n"
-	printf "* 11- All IPs                | 12- test                    *\n"
-	printf "************************************************************\n"
+	printf "\n********************************************************************************\n"
+	printf "*                             choose option below                              *\n"
+	printf "********************************************************************************\n"
+	printf "*  1- all IPs                           |  2- number of visit per IPs          *\n"
+	printf "********************************************************************************\n"
+	printf "*  3- top 10 IPs & referrs              |  4- request per day realtime         *\n"
+	printf "********************************************************************************\n"
+	printf "*  5- All IPs                           |  6- test                              \n"
+	printf "********************************************************************************\n"
+	printf "*  7- All IPs                           |  8- test                              \n"
+	printf "********************************************************************************\n"
+	printf "*  9- All IPs                           | 10- test                              \n"
+	printf "********************************************************************************\n"
+	printf "* 11- All IPs                           | 12- test                              \n"
+	printf "********************************************************************************\n"
 
 	read option
 	clear
@@ -57,7 +57,7 @@ function menu {
 		1) findIps ;;
 		2) number_of_visit_per_ips ;;
 		3) top_ips_reffers ;;
-		4) test ;;
+		4) request_per_day ;;
 		5) test ;;
 		6) test ;;
 		7) test ;;
@@ -116,6 +116,17 @@ function top_ips_reffers {
     printf "You can see two files in this directory that show top 10 of IPs and Reffers.\n\n"
     printf "1- topIps.txt      2- topReffers.txt\n\n"
     printf "***************************************************************************\n"
+    again
+}
+
+# this function find all requests per day and list of all realtime request
+function request_per_day {
+    awk '{print $4}' $file | cut -d: -f1 | uniq -c > requestPerDay.txt
+	awk '{ printf("%-15s\t%s\t%s\t%s\n", $1, $6, $9, $7) }' $file > realtimeRequest.txt
+    figlet Result
+    printf "You can see two files in this directory that show requests realtime and per day.\n\n"
+    printf "1- requestPerDay.txt      2- realtimeRequest.txt\n\n"
+    printf "********************************************************************************\n"
     again
 }
 
