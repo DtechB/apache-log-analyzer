@@ -17,7 +17,7 @@ function input {
 	printf "1- apache.log\n"
 	printf "2- access.log\n"
 	printf "3- error.log\n"
-	printf "press any key except 1,2,3 to exit\n"
+	printf "*- exit\n"
 	read num
 
 	case $num in
@@ -33,12 +33,50 @@ function input {
 		clear
 		figlet Analyze error.log
 		menu;;
+		*) exit;;
 	esac
 }
 
 function menu {
-	printf "\n**********************************************\n\n"
-	printf "choose option"
+
+	printf "\n***************************************************\n"
+	printf "*              choose option below                *\n"
+	printf "***************************************************\n"
+	printf "*  1- All IPs           |  2- test                *\n"
+	printf "***************************************************\n"
+	printf "*  3- All IPs           |  4- test                *\n"
+	printf "***************************************************\n"
+	printf "*  5- All IPs           |  6- test                *\n"
+	printf "***************************************************\n"
+	printf "*  7- All IPs           |  8- test                *\n"
+	printf "***************************************************\n"
+	printf "*  9- All IPs           | 10- test                *\n"
+	printf "***************************************************\n"
+	printf "* 11- All IPs           | 12- test                *\n"
+	printf "***************************************************\n"
+
+	read option
+	clear
+
+	case $option in
+		1) test ;;
+		2) test ;;
+		3) test ;;
+		4) test ;;
+		5) test ;;
+		6) test ;;
+		7) test ;;
+		8) test ;;
+		9) test ;;
+		10) test ;;
+		11) test ;;
+		12) test ;;
+	esac
+
+}
+
+function test {
+	echo "test"
 }
 
 input
