@@ -23,7 +23,7 @@
 
 # Hello my name is Danial Bayati.
 # I'm student of Shahrood university of Tecnology with 9816073 student ID.
-# This script can analyze apache logs, access logs and error logs.
+# This script can analyze apache logs, access logs.
 
 
 sudo apt install figlet
@@ -41,10 +41,12 @@ function input {
 
 	case $num in
 		1) file="apache.log"
+		file1="apache_"
 		clear
 		figlet Analyze apache.log
 		menu;;
 		2) file="access.log"
+		file1="access_"
 		clear
 		iglet Analyze access.log
 		menu;;
@@ -65,6 +67,8 @@ function menu {
 	printf "********************************************************************************\n"
 	printf "*  7- count all response code           |  8- images cause 200 & 403 response  *\n"
 	printf "********************************************************************************\n"
+	printf "*  9- show top 10 browser               | 10- exit                             *\n"
+	printf "********************************************************************************\n"
 
 	read option
 	clear
@@ -78,6 +82,7 @@ function menu {
 		6) error_status ;;
 		7) count_response_code ;;
 		8) img_response ;;
+		9) popular_browser ;;
 	esac
 
 }
@@ -178,9 +183,21 @@ function img_response {
     awk '($9 ~ /404/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > imgsCouse404.txt
     figlet Result
     printf "You can see two files in this directory that show images cause 200 and 404.\n\n"
-    printf "1- imgsCouse200.txt      2- imgsCouse404.txt\n\n"
+    printf "1- mgsCouse200.txt      2- imgsCouse404.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
+
+
+# this function show top 10 browser that use in this file
+function popular_browser {
+    awk '{brow[$(NF)]++} END {for (item in brow) print item, brow[item]}' $file | sort -k 2nr | head -n 10 > "$file1"popularBrowsers.txt
+    figlet Result
+    printf "You can see this file in this directory that show list of top 10 browser.\n\n"
+    printf '1- *popularBrowsers.txt\n\n'
+    printf "********************************************************************************\n"
+    again
+}
+
 
 input
