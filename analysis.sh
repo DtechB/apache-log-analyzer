@@ -83,12 +83,9 @@ function menu {
 		7) count_response_code ;;
 		8) img_response ;;
 		9) popular_browser ;;
+		10) exit ;;
 	esac
 
-}
-
-function test {
-	echo "test"
 }
 
 function again {
@@ -104,86 +101,86 @@ function again {
 
 # this function find all ips in log file that is (first) parameter and count them
 function findIps {
-    awk -F\" '{print $1 }' $file | wc | awk '{print "number of all IPs is " $1}' > IPs.txt
-	awk '{print $1}' $file | sort | uniq | wc | awk '{print "number of all IPs that are uniq is " $1}' >> IPs.txt
-    awk '{print count "times ("$1") repeated from list"}' $file | sort -r | uniq -c | sort -r >> IPs.txt
+    awk -F\" '{print $1 }' $file | wc | awk '{print "number of all IPs is " $1}' > "$file1"IPs.txt
+	awk '{print $1}' $file | sort | uniq | wc | awk '{print "number of all IPs that are uniq is " $1}' >> "$file1"IPs.txt
+    awk '{print count "times ("$1") repeated from list"}' $file | sort -r | uniq -c | sort -r >> "$file1"IPs.txt
     awk '{print NR,$1}' $file | uniq > listIPs.txt
     figlet Result
     printf "You can see two file in this directory that show result about IPs.\n\n"
-    printf "1- Ips.txt      2- listIPs.txt\n\n"
+    printf "1- *Ips.txt      2- *listIPs.txt\n\n"
     printf "********************************************************************\n"
     again
 }
 
 # this function find number of visit per each ip
 function number_of_visit_per_ips {
-    awk '{print "requests from " $1}' $file | sort | uniq -c | sort > visitPerIPs.txt
+    awk '{print "requests from " $1}' $file | sort | uniq -c | sort > "$file1"visitPerIPs.txt
     figlet Result
     printf "You can see this file in this directory that show number of visit per IPs.\n\n"
-    printf "1- visitPerIPs.txt\n\n"
+    printf "1- *visitPerIPs.txt\n\n"
     printf "***************************************************************************\n"
     again
 }
 
 # this function find all top 10 of Ips and top 10 of reffers in log file
 function top_ips_reffers {
-    awk -F\" ' { print $4 } ' $file | grep -v '-' | grep -v 'http://www.semecomplete.com' | sort | uniq -c | sort -rn | head -n 10 > topIps.txt
-	awk -F\" ' { print $6 } ' $file | sort | uniq -c | sort -rn | head -n 10 > topReffers.txt
+    awk -F\" ' { print $4 } ' $file | grep -v '-' | grep -v 'http://www.semecomplete.com' | sort | uniq -c | sort -rn | head -n 10 > "$file1"topIps.txt
+	awk -F\" ' { print $6 } ' $file | sort | uniq -c | sort -rn | head -n 10 > "$file1"topReffers.txt
     figlet Result
     printf "You can see two files in this directory that show top 10 of IPs and Reffers.\n\n"
-    printf "1- topIps.txt      2- topReffers.txt\n\n"
+    printf "1- *topIps.txt      2- *topReffers.txt\n\n"
     printf "***************************************************************************\n"
     again
 }
 
 # this function find all requests per day and list of all realtime request
 function request_per_day {
-    awk '{print $4}' $file | cut -d: -f1 | uniq -c > requestPerDay.txt
-	awk '{ printf("%-15s\t%s\t%s\t%s\n", $1, $6, $9, $7) }' $file > realtimeRequest.txt
+    awk '{print $4}' $file | cut -d: -f1 | uniq -c > "$file1"requestPerDay.txt
+	awk '{ printf("%-15s\t%s\t%s\t%s\n", $1, $6, $9, $7) }' $file > "$file1"realtimeRequest.txt
     figlet Result
     printf "You can see two files in this directory that show requests realtime and per day.\n\n"
-    printf "1- requestPerDay.txt      2- realtimeRequest.txt\n\n"
+    printf "1- *requestPerDay.txt      2- *realtimeRequest.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
 
 # this function show all item that status requests are between 200 and 304 that show succsess
 function success_status {
-    awk '($9 ~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > succesStatus.txt
+    awk '($9 ~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > "$file1"succesStatus.txt
     figlet Result
     printf "You can see this file in this directory that show all requests status success.\n\n"
-    printf "1- succesStatus.txt\n\n"
+    printf "1- *succesStatus.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
 
 # this function show all item that status requests are between 400 and 504 that show error
 function error_status {
-    awk '($9 !~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > errorStatus.txt
+    awk '($9 !~ /200|206|300|301|304/)' $file | awk '{print $9,$7}' | sort | uniq > "$file1"errorStatus.txt
     figlet Result
     printf "You can see this file in this directory that show all requests status error.\n\n"
-    printf "1- errorStatus.txt\n\n"
+    printf "1- *errorStatus.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
 
 # this function count number of all response code that are succesfuly or not
 function count_response_code {
-    awk '{print $9}' $file | sort | uniq -c | sort -rn > countResponseCode.txt
+    awk '{print $9}' $file | sort | uniq -c | sort -rn > "$file1"countResponseCode.txt
     figlet Result
     printf "You can see this file in this directory that show count of responsees code.\n\n"
-    printf "1- countResponseCode.txt\n\n"
+    printf "1- *countResponseCode.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
 
 # this function show list image requests that returned 404 or 200 response code
 function img_response {
-    awk '($9 ~ /200/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > imgsCouse200.txt
-    awk '($9 ~ /404/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > imgsCouse404.txt
+    awk '($9 ~ /200/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > "$file1"imgsCouse200.txt
+    awk '($9 ~ /404/)' $file | awk -F\" '($2 ~ /\.(jpg|gif|png)/){print $4}' | sort | uniq -c | sort -rn > "$file1"imgsCouse404.txt
     figlet Result
     printf "You can see two files in this directory that show images cause 200 and 404.\n\n"
-    printf "1- mgsCouse200.txt      2- imgsCouse404.txt\n\n"
+    printf "1- *mgsCouse200.txt      2- *imgsCouse404.txt\n\n"
     printf "********************************************************************************\n"
     again
 }
