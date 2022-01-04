@@ -48,7 +48,7 @@ function input {
 		2) file="access.log"
 		file1="access_"
 		clear
-		iglet Analyze access.log
+		figlet Analyze access.log
 		menu;;
 		*) exit;;
 	esac
@@ -83,7 +83,7 @@ function menu {
 		7) count_response_code ;;
 		8) img_response ;;
 		9) popular_browser ;;
-		10) exit ;;
+		*) exit ;;
 	esac
 
 }
@@ -104,7 +104,7 @@ function findIps {
     awk -F\" '{print $1 }' $file | wc | awk '{print "number of all IPs is " $1}' > "$file1"IPs.txt
 	awk '{print $1}' $file | sort | uniq | wc | awk '{print "number of all IPs that are uniq is " $1}' >> "$file1"IPs.txt
     awk '{print count "times ("$1") repeated from list"}' $file | sort -r | uniq -c | sort -r >> "$file1"IPs.txt
-    awk '{print NR,$1}' $file | uniq > listIPs.txt
+    awk '{print NR,$1}' $file | uniq > "$file1"listIPs.txt
     figlet Result
     printf "You can see two file in this directory that show result about IPs.\n\n"
     printf "1- *Ips.txt      2- *listIPs.txt\n\n"

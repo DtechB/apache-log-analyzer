@@ -1,0 +1,10 @@
+     23 
+     21 https://www.google.com/
+      7 https://www.google.com
+      3 https://www.google.co.uk/
+      3 https://obiavo.kz/
+      3 http://google.com
+      3 http://baidu.com/
+      2 http://site.ru
+      1 https://www.google.ru/
+      1 https://www.google.com.br/
